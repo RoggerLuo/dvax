@@ -1,0 +1,25 @@
+{
+  "name": "dvax",
+  "version": "0.0.2",
+  "description": "dva + x",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "none"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RoggerLuo/dvax.git"
+  },
+  "keywords": [
+    "dva"
+  ],
+  "author": "roger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RoggerLuo/dvax/issues"
+  },
+  "homepage": "https://github.com/RoggerLuo/dvax#readme"
+}

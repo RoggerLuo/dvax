@@ -21,5 +21,17 @@
   "bugs": {
     "url": "https://github.com/RoggerLuo/dvax/issues"
   },
-  "homepage": "https://github.com/RoggerLuo/dvax#readme"
+  "homepage": "https://github.com/RoggerLuo/dvax#readme",
+  "dependencies": {
+    "invariant": "^2.2.4",
+    "react": "^16.4.1",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-saga": "^0.16.0",
+    "regenerator-runtime": "^0.12.0",
+    "whatwg-fetch": "^2.0.4"
+  },
+  "devDependencies": {
+    "tape": "^4.9.1"
+  }
 }

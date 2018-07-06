@@ -11,7 +11,7 @@ export default (sagaMiddleware,namespace,config) => (key, cb) => {
             return put(action)
         }
         function* saga(action) {
-            yield cb(action,{ ...config.sagaMethod,...config.sagaInjection, put: prefixedPut, call })  //注入参数
+            yield cb(action,{ ...config.sagaMethod, ...config.saga, put: prefixedPut, call })  //注入参数
         }
         return function*() {
             yield takeEvery(`${namespace}/${key}`,saga)

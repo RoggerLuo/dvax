@@ -8,7 +8,7 @@ export default function(config) {
             config = config()
         }
         
-        const { baseUrl, headers, bodyParser } = config
+        let { baseUrl, headers, bodyParser } = config
 
         if(!baseUrl) baseUrl = ''
         // initial

@@ -2,13 +2,16 @@ import invariant from 'invariant'
 import injectModel from './injectModel'
 
 export default function(app,config,sagaMiddleware){
-    config.sagaMethod = { get }  // saga中也加入get方法
+    config.sagaMethod = { get, fetch }  // saga中也加入get方法
     return { 
         create: injectModel(sagaMiddleware,app._store,config),
         dispatch: app._store.dispatch,
         get,
         change,
         reduce
+    }
+    function fetch(){ // 用来报错的fetch
+        invariant(false,'fetch还没有配置，请在dvax.start中配置并注入fetch，详见说明：https://github.com/RoggerLuo/dvax')
     }
     function get(namespace){
         if(!namespace) return app._store.getState()

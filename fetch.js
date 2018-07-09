@@ -1,6 +1,9 @@
 import invariant from 'invariant'
 export default function(config) {
-    return (url, { ...options }) => {
+    return (url, options) => {
+        if(!options) options = {}
+        options = { ...options }
+
         if(typeof(config) == 'function') {
             config = config()
         }

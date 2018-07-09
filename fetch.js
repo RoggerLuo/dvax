@@ -10,8 +10,7 @@ export default function(config) {
         
         const { baseUrl, headers, bodyParser } = config
 
-        invariant(!!baseUrl,`Fetch需要传入一个baseUrl配置项`)
-
+        if(!baseUrl) baseUrl = ''
         // initial
         options.headers = {}
         options.credentials = 'include'

@@ -83,6 +83,7 @@ const fetch = Fetch({
 // 初始化dva，并向saga的参数中注入fetch
 dvax.start({ effects: { fetch } })
 ```
+## onStart
 ## controlled input组件
 ## debounce
 ## route

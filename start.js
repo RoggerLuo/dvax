@@ -9,10 +9,16 @@ function start(Component,_conf={}){
     Object.keys(_conf).forEach(key=>{
         config[key] = _conf[key]               
     })
+    this._onStart.forEach(cb=>{
+        cb && cb()
+    })
     return (
         <Provider store={this._store}>
             <Component />
         </Provider>
     )
+}
+export function onStart(cb){
+    this._onStart.push(cb)
 }
 export default start 

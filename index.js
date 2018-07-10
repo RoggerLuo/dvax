@@ -3,10 +3,12 @@ import createSagaMiddleware from 'redux-saga'
 import { connect } from 'react-redux'
 import invariant from 'invariant'
 import getModel from './Model'
-import start from './start'
+import start, { onStart } from './start'
 const app = {
     _store: null,
     _constants: {},
+    _onStart: [],
+    onStart,
     start
 } 
 const config = { effects: {} } //初始值，后面会用到

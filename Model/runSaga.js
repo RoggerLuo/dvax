@@ -10,9 +10,9 @@ export default (sagaMiddleware,namespace,config) => (key, cb) => {
             const injectParams = { put: prefixedPut, dispatch: prefixedPut, change, reduce, call } // 保留put兼容老版本代码
             yield cb(action,{ 
                 ...config.sagaMethod,
-                ...config.effects,
-                ...injectParams
-            })  //注入参数
+                ...config.effects, // 注入自定义参数
+                ...injectParams // 覆盖掉原始的sagaMethod，替换change、reduce等方法
+            })  
         }
         return function*() {
             yield takeEvery(`${namespace}/${key}`,saga)

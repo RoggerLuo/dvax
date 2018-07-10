@@ -8,13 +8,13 @@ export default function(sagaMiddleware,store,config){
     return (m)=>{
         const runSingleSaga = runSaga(sagaMiddleware,m.namespace,config)
         injectReducer(m,reducers)
-        injectSaga(m.effects)
-        function injectSaga(effects) {
-            if(effects) {
-                Object.keys(effects).forEach(key => {
-                    runSingleSaga(key, effects[key])
-                })                
-            }
+        injectSaga(m.effects,runSingleSaga)
+    }
+    function injectSaga(effects,runSingleSaga) {
+        if(effects) {
+            Object.keys(effects).forEach(key => {
+                runSingleSaga(key, effects[key])
+            })                
         }
     }
     function injectReducer(m,reducers) {

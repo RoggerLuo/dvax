@@ -1,6 +1,7 @@
 import invariant from 'invariant'
 import injectDefaultReducers from './injectDefaultReducers'
 import wrapReducer from './wrapReducer'
+
 export default function({ reducers, state, namespace }) {
     const defaultState = state || {}
     reducers = reducers || {}

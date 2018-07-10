@@ -8,7 +8,7 @@ export default function(config) {
             config = config()
         }
         
-        let { baseUrl, headers, bodyParser } = config
+        let { baseUrl, headers, bodyTransform } = config
 
         if(!baseUrl) baseUrl = ''
         // initial
@@ -26,8 +26,8 @@ export default function(config) {
         if (!options.method) options.method = "GET"
         options.method = options.method.toUpperCase()
         if (options.method === 'POST' || options.method === 'PUT') {
-            if(bodyParser){
-                options.body = bodyParser(options.body)
+            if(bodyTransform){
+                options.body = bodyTransform(options.body)
             }  
         }
         if (options.query) {

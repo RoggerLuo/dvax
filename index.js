@@ -12,7 +12,7 @@ const app = {
     start
 } 
 let alreadyStarted = false
-const config = { saga: {} } //初始值，后面会用到
+const config = { effects: {} } //初始值，后面会用到
 function start(_conf){
     invariant(!alreadyStarted,'dva已经初始化过一次了')
     alreadyStarted = true

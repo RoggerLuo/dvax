@@ -11,7 +11,7 @@ export default function(app,config,sagaMiddleware){
         reduce
     }
     function fetch(){ // 用来报错的fetch
-        invariant(false,'fetch还没有配置，请在dvax.start中配置并注入fetch，详见说明：https://github.com/RoggerLuo/dvax')
+        invariant(false,'fetch还没有配置，请在dvax.start中配置并注入fetch之后再使用saga中的fetch，详见说明：https://github.com/RoggerLuo/dvax')
     }
     function get(namespace){
         if(!namespace) return app._store.getState()

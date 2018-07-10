@@ -16,7 +16,7 @@ function start(Component,config={}){
     return (
         <Provider store={this._store}>
             <Component/>
-        <Provider/>
+        </Provider>
     )
 }
 export function onStart(cb){

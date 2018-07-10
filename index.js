@@ -1,6 +1,7 @@
-import 'whatwg-fetch'
 // import "babel-polyfill" // 90kb
-import "regenerator-runtime/runtime"  //7kb
+
+// import 'whatwg-fetch'
+// import "regenerator-runtime/runtime"  //7kb
 import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { connect } from 'react-redux'

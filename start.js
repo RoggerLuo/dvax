@@ -12,11 +12,8 @@ function start(Component,_conf={}){
     this._onStart.forEach(cb=>{
         cb && cb()
     })
-    return (
-        <Provider store={this._store}>
-            <Component />
-        </Provider>
-    )
+    const _Component = React.createElement(Component,{},null)
+    return React.createElement(Provider,{store:this._store},_Component)
 }
 export function onStart(cb){
     this._onStart.push(cb)

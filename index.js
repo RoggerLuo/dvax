@@ -14,11 +14,11 @@ const app = {
 const sagaMiddleware = createSagaMiddleware()
 app._store = createStore(a => a, applyMiddleware(sagaMiddleware))
 
-export const Model = getModel(app._store,app._config,sagaMiddleware)
-connect('app')
-connect(st=>st.app)
-connect()
-connect(st=>st)
+const _connect = reducerName => {
+    if(!reducerName) return connect(state=>state)
+    return connect(state=>state[reducerName])
+}
 
-export { connect }
+export const Model = getModel(app._store,app._config,sagaMiddleware)
+export { connect: _connect }
 export default app

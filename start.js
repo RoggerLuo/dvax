@@ -1,3 +1,4 @@
+import invariant from 'invariant'
 import React from 'react'
 import { Provider } from 'react-redux'
 let alreadyStarted = false
@@ -12,6 +13,7 @@ function start(Component,_conf={}){
     this._onStart.forEach(cb=>{
         cb && cb()
     })
+    // 因为webpack打包时loader时剔除了node_modules，所以无法使用jsx
     const _Component = React.createElement(Component,{},null)
     return React.createElement(Provider,{store:this._store},_Component)
 }

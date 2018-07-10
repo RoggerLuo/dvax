@@ -15,5 +15,10 @@ const sagaMiddleware = createSagaMiddleware()
 app._store = createStore(a => a, applyMiddleware(sagaMiddleware))
 
 export const Model = getModel(app._store,app._config,sagaMiddleware)
+connect('app')
+connect(st=>st.app)
+connect()
+connect(st=>st)
+
 export { connect }
 export default app

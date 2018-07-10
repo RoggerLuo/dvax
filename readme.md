@@ -69,6 +69,10 @@ export default connect('app')( props =>
 	</div>
 )
 ```
+### dvax包要改成ES5的写法，万一不支持
+### connect改写
+connect('app')
+
 ## 用effects处理异步
 ## 在effects中使用fetch
 ```javascript

@@ -13,9 +13,11 @@ function start(Component,config={}){
     this._onStart.forEach(cb=>{
         cb && cb()
     })
-    // 因为webpack打包时loader时剔除了node_modules，所以无法使用jsx
-    const _Component = React.createElement(Component,{},null)
-    return React.createElement(Provider,{store:this._store},_Component)
+    return (
+        <Provider store={this._store}>
+            <Component/>
+        <Provider/>
+    )
 }
 export function onStart(cb){
     this._onStart.push(cb)

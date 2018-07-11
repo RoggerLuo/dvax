@@ -25,9 +25,9 @@ render(
 
 或者可以使用 [dvax-starter](http://wwwbaidu.com) 脚手架
 ## 用dvax管理组件数据
-#### 1.引入Model类和connect
+#### 1.引入Model类
 ``` javascript
-import { Model, connect } from 'dvax'
+import { Model } from 'dvax'
 
 function Example({ title }){
 	return <div>{title}</div>
@@ -43,7 +43,7 @@ Model.create(model) // 用Model类的create方法
 ```
 #### 3.连接组件
 ``` javascript 
-connect('app')(Example) // 直接写namespace
+Model.connect('app')(Example) // 直接写namespace
 ```
 #### 4.修改model的值
 ``` javascript
@@ -63,76 +63,161 @@ Model.create({
 	state: { title: 'defaultTitle' }
 })
 
-export default connect('app')( props =>
+export default Model.connect('app')( props =>
 	<div onClick={()=>Model.change('app','title',`I'm new title`)}>
 		{props.title}
 	</div>
 )
 ```
-### dvax包要改成ES5的写法，万一不支持
-### connect改写
-connect('app')
 
-## 用effects处理异步
-## 在effects中使用fetch
-```javascript
-import dvax from 'dvax'
-import Fetch from 'dvax/fetch'
-// 配置一个fetch实例
-const fetch = Fetch({ 
-	baseUrl: 'http://1.1.1.1:8008',
-	headers: { ... },
-	bodyParser: function(bodyData){ /*返回新的body*/ } 
-})
-// 初始化dva，并向saga的参数中注入fetch
-dvax.start({ effects: { fetch } })
+# Model类
+#### modelConfig
+``` javascript
+{
+	namespace: 'string', // 唯一必填
+	state: 'object', //初始值， 
+	effects: { 
+		'generator' 
+	},
+	reducers: { 
+		'function'
+	}
+}
 ```
-## onStart
-## controlled input组件
-## debounce
-## route
-## 脚手架dvax-starter
-## API参考
+#### Model.create(modelConfig)
+根据config创建一个Model，加入到dvax中，  
+可以动态创建
+#### Model.dispatch(action)
+同redux的dispatch
+#### Model.change(namespace,key,value)
+改变model的state中某一个field/key的值
 
-
-## Model reduce\change\get
+#### Model.reduce(namespace,function(state))
+对model的state进行更迭，  
+函数的返回值将作为新的state
 
 ```javascript
-Model.reduce(state=>{
+Model.reduce(namespace,state=>{
 	// doSomething with state
     return { ...state }
 })
 ```   
-```javascript
-Model.change('reducerName','key','value')
-```   
-```javascript
-Model.get('reducerName').someProp
-```   
-## plugins: keyboard使用示范
-```javascript
-import { Keyboard } from 'dva'
+#### Model.get(namespace)
+实时获取state最新的值  
 
-k = new Keyboard(document.body)
+```javascript
+Model.get() // 获取所有state
+Model.get('namespace') // 获取某个特定的model的state
+Model.get().app === Model.get('app') // true
+```   
+#### Model.connect(namespace/function)
+可以直接写namespace('modelName'),  
+也可以用传统方式传入mapToState函数
+
+## 在effects中使用fetch
+配置fetch
+
+```javascript
+import dvax from 'dvax'
+import Fetch from 'dvax/fetch'
+const fetch = Fetch({ // 配置一个fetch实例
+	baseUrl: 'http://1.1.1.1:8008',
+	headers: { ... },
+	bodyTransform(body){ 
+		return body
+	} 
+})
+dvax.start(App,{ effects: { fetch } }) // 初始化dvax，并向saga的参数中注入fetch
+```
+
+在model中，
+
+``` javascript
+{
+	namespace:'example',
+	effects:{
+		*fetchData(params,{ fetch, call, dispatch }){
+			const res = yield call(fetch,'data')
+			yield dispatch({ type:'someAction', res })
+		}
+	}
+}
+// 使用
+Model.dispatch({ type:'fetchDate' })
+```
+
+## onStart
+如果在dvax.start之前，  
+dispatch effects向远端拿数据，会失败，  
+因为fetch还未注入， 
+可以把dispatch的语句放在onStart中
+
+``` javascript
+import dvax,{ Model } from 'dvax'
+dvax.onStart(function(){
+	// 在配置注入之后，可以正常的dispatch effects
+	Model.dispatch({ type: 'fetchData' })
+})
+```
+## Controlled input: inputController组件
+帮input自动绑定model，  
+暴露出一个拦截器函数，可以干涉输入过程，做一些校验和监听，  
+视图input组件接受onChange和value两个props
+
+``` javascript
+import inputController from 'dvax/inputController'
+const MyInput = ({onChange,value}) => {
+	return <input type="text" onChange={onChange} value={value} />
+}
+const ControllerdInput = inputController(
+	MyInput,
+	'name of model',
+	'field or key',
+	(newVal,oldVal)=>{
+		// do something when input change
+	}
+)
+// 使用
+<ControllerdInput />
+```
+
+
+## Keyboard
+```javascript
+import Keyboard from 'dvax/keyboard'
+
+const k = new Keyboard(document.body)
 k.keybind(({keyMap,meta,ctrl},catcher)=>{
-    catcher(keyMap['n'],{meta,ctrl},(e)=>this.newNote())
-    catcher(keyMap['s'],{meta},(e)=>this.saveNote())
-    catcher(keyMap['backSpace'],{meta,ctrl},(e)=>this.deleteNote())
+    catcher(keyMap['n'],{meta,ctrl},e=>create())
+    catcher(keyMap['s'],{meta},e=>save())
+    catcher(keyMap['backSpace'],{meta,ctrl},e=>del())
 })
 ```
 
 
-## test/inject.js
-注入`dva`和`dvaStatic`两个全局变量,  
-使用`dva.test`来构建测试,  
-示例：  
+## 单元测试工具：test
+
+``` javascript
+test( 'title', t=>{
+	t('subTitle', ()=>{
+		return 'boolean'
+	})
+})
+```
+
+example：
 
 ```javascript
-const Xss = dvaStatic.Xss
-dva.test('Xss', (t) => {
+import test from 'dvax/text'
+import xss from 'dvax/xss'
+test('Xss', (t) => {
     const string = 'test<a>testatesta'
     t('translated string',()=>{
-        return Xss.escape(string) === 'test&lt;a&gt;testatesta' 
+        return xss.escape(string) === 'test&lt;a&gt;testatesta' 
     })
 })
 ```
+
+## debounce
+## route
+## 脚手架dvax-starter

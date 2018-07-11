@@ -1,8 +1,10 @@
+import { connect } from 'react-redux'
 import invariant from 'invariant'
 
 export default function(store){
     return { 
         dispatch: store.dispatch,
+        connect: _connect,
         get,
         change,
         reduce,
@@ -24,5 +26,12 @@ export default function(store){
         invariant(typeof(namespace) == 'string','Model reduce方法需要传入namespace，为string')
         invariant(namespace && reducer,'Model reduce方法需要传入namespace，reducer')
         store.dispatch({ type: `${namespace}/std`, reducer })
+    }
+    function _connect(namespace){
+        if(typeof(namespace) == 'function') {
+            return connect(namespace)
+        }
+        if(!namespace) return connect(state=>state)
+        return connect(state=>state[namespace])
     }
 }

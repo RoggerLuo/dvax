@@ -23,5 +23,5 @@ const _connect = reducerName => {
 }
 
 export const Model = getModel(app._store,app._config,sagaMiddleware)
-export { _connect as connect }
+export { connect }
 export default app

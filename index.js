@@ -15,7 +15,7 @@ const sagaMiddleware = createSagaMiddleware()
 app._store = createStore(a => a, applyMiddleware(sagaMiddleware))
 
 const _connect = reducerName => {
-    if(typeOf(reducerName) == 'function') {
+    if(typeof(reducerName) == 'function') {
         return connect(reducerName)
     }
     if(!reducerName) return connect(state=>state)

@@ -1,6 +1,6 @@
 import invariant from 'invariant'
-import injectModel from './injectModel'
-import getMethods from './methods'
+import injectModel from './injectModel.js'
+import getMethods from './methods.js'
 
 export default function(store,config,sagaMiddleware){
     const methods = getMethods(store)

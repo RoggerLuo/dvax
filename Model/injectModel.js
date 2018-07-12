@@ -1,6 +1,6 @@
 import invariant from 'invariant'
-import runSaga from './runSaga'
-import composeReducer from './composeReducer'
+import runSaga from './runSaga.js'
+import composeReducer from './composeReducer/index.js'
 import { combineReducers } from 'redux'
 
 export default function(sagaMiddleware,store,config){

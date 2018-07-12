@@ -1,8 +1,8 @@
 import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { connect } from 'react-redux'
-import getModel from './Model'
-import start, { onStart } from './start'
+import getModel from './Model.js'
+import start, { onStart } from './start.js'
 const app = {
     _store: null,
     _constants: {},

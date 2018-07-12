@@ -10,7 +10,7 @@ export default (View,namespace,fieldName,callback) => {
                 val = callback(val,oldValue)
             Model.change(namespace,fieldName,val)
         }
-        return <View onChange={onChange} value={value}/>
+        return <View onChange={onChange} value={value||''}/>
     }
     const mapTo = (state) => ({ value: state[namespace][fieldName] })
     return Model.connect(mapTo)(component)

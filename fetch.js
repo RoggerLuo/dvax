@@ -38,13 +38,21 @@ export default function(config) {
         }
         return fetch(url, options)
             .then(checkStatus)
+            .then(parseText)
             .then(parseJSON)
             .catch(err => err.message)
     }
 }
-
-function parseJSON(response) {
-    return response.json()
+function parseJSON(text){ // if it can
+    try{
+        return JSON.parse(text)
+    }catch(err){
+        console.log('尝试进行JSON.parse失败:',err.message,'返回原始值')
+        return text
+    }
+}
+function parseText(response) {
+    return response.text()
 }
 
 function checkStatus(response) {

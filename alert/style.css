@@ -1,0 +1,18 @@
+.dvax-alert-wrap {
+    user-select: none;
+    position: fixed;
+    z-index: 99999;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}
+
+.dvax-alert-content {
+    text-align: center;
+    padding: 25px;
+    border-radius: 4px;
+    background-color: #333333e6;
+    color: white;
+    font-size: 14px;
+    line-height: 1;
+}

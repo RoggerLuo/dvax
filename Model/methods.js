@@ -3,6 +3,7 @@ import invariant from 'invariant'
 
 export default function(store){
     return { 
+        put: store.dispatch,
         dispatch: store.dispatch,
         connect: _connect,
         get,

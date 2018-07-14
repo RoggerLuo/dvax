@@ -1,4 +1,4 @@
-.dvax-alert-wrap {
+.wrap {
     user-select: none;
     position: fixed;
     z-index: 99999;
@@ -7,7 +7,8 @@
     transform: translate(-50%,-50%);
 }
 
-.dvax-alert-content {
+.content {
+    min-width: 90px;
     text-align: center;
     padding: 25px;
     border-radius: 4px;

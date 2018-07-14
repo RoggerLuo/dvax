@@ -1,8 +1,19 @@
 #dvax
 更简单的redux
 
+- [开始使用](#guide1)  
+	- 安装
+	- 应用入口文件
+- [用dvax管理组件数据](#guide2)
+	- 1.引入model类
+	- 2.定义一个model
+	- 3.连接组件
+	- 4.修改model的值
+* [全局提示：alert](#alert)
+* [淡入淡出动画：fade](#fade)
 
-## 开始使用
+
+## <span id="guide1">开始使用</span>
 #### 安装  
 
 ``` bash
@@ -24,7 +35,9 @@ render(
 以及拓展运算符和Object对象上的assign、keys等方法
 
 或者可以使用 [dvax-starter](http://wwwbaidu.com) 脚手架
-## 用dvax管理组件数据
+
+## <span id="guide2">用dvax管理组件数据</span>
+
 #### 1.引入Model类
 ``` javascript
 import { Model } from 'dvax'
@@ -180,7 +193,36 @@ const ControllerdInput = inputController(
 // 使用
 <ControllerdInput />
 ```
+## <span id="alert">全局提示：alert</span>
+先把`Alert标签`放在全局任何一个地方
 
+```javascript
+import Alert from 'dvax/alert'
+<Alert/>
+```
+然后引用小写alert(记得加大括号)使用
+
+```javascript
+import { alert } from 'dvax/alert'
+alert('上传成功',2000,'good')
+alert('上传失败',2000,'bad')
+```
+
+## <span id="fade">淡入淡出动画：fade</span>
+``` javascript
+import Fade from 'dvax/fade'
+
+<Fade 
+	duration={seconds} 
+	show={boolean} 
+	style={{display:'inline-block'}} 
+	className="yourClassName"
+	marginTop={"5px"} // 动画出现时离自然文档流位置的距离
+>
+    <div>abc</div>
+</Fade>
+
+```
 
 ## Keyboard
 ```javascript

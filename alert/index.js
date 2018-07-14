@@ -2,12 +2,12 @@ import invariant from 'invariant'
 import React from 'react'
 import { Model } from 'dvax'
 import Fade from 'dvax/fade'
-import './style.css'
+import s from './style.css'
 import okPng from './ok.png'
 import notOkPng from './notok.png'
 Model.create({
     namespace:'dvaxAlert',
-    state:{ status:false, message:'baaabbasdfsasdfsadfsfbbb', show:false },
+    state:{ status:false, message:'', show:false },
     reducers:{
         alert(state,{ status, message }){
             return { ...state, show:true, message, status}
@@ -34,8 +34,8 @@ export function alert(message,duration,status){
 }
 const Component = Model.connect('dvaxAlert')(props=>{
     return (
-        <Fade duration={300} show={props.show} className={"dvax-alert-wrap"}>
-            <div className="dvax-alert-content">
+        <Fade duration={300} show={props.show} className={s.wrap}>
+            <div className={s.content}>
                 <div>
                     {props.status=='good'?(<img src={okPng} style={{marginBottom:'10px',width:'40px'}}/>):null}
                     {props.status=='bad'?(<img src={notOkPng} style={{marginBottom:'10px',width:'40px'}}/>):null}

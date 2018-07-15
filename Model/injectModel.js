@@ -24,7 +24,6 @@ export default function(sagaMiddleware,store,config){
         )
         reducers[m.namespace] = composeReducer(m)
         store.replaceReducer(combineReducers({ ...reducers }))
-        //暂时好像没有用到event
-        //m.event && m.event.onReady && m.event.onReady(store.dispatch) 
+        m.event && m.event.onReady && m.event.onReady(store.dispatch)
     }
 }

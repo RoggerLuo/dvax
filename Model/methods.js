@@ -1,7 +1,8 @@
+import sagaParams from './sagaParams'
 import { connect } from 'react-redux'
 import invariant from 'invariant'
 
-export default function(store){
+export default function(store,sagaMiddleware,config){
     return { 
         put: store.dispatch,
         dispatch: store.dispatch,
@@ -9,7 +10,19 @@ export default function(store){
         get,
         change,
         reduce,
-        fetch
+        fetch,
+        run
+    }
+    function run(namespace,saga){ 
+        invariant(typeof(saga) === 'function', `run方法应该传入一个generator`)
+        function* sagaWrap() {
+            yield saga({ 
+                ...config.sagaMethod,
+                ...config.effects, // 注入自定义参数
+                ...sagaParams(namespace)
+            })  
+        }
+        sagaMiddleware.run(sagaWrap) 
     }
     function fetch(){ // 如果没有实现的话，就会报错
         invariant(false,'fetch还没有配置，请在dvax.start中配置并注入fetch之后再使用saga中的fetch，详见说明：https://github.com/RoggerLuo/dvax')

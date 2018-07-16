@@ -43,12 +43,16 @@ export default function(store,sagaMiddleware,config){
         store.dispatch({ type: `${namespace}/std`, reducer })
     }
     function _connect(namespace){
-        let mapToState = state => state
+        let mapToState
         if(typeof(namespace) == 'function') {
             mapToState = namespace
+            return connect(mapToState)
         }
         if(typeof(namespace) == 'string') {
             mapToState = state => state[namespace]
+        }
+        if(!namespace){
+            return connect()
         }
         return (Comp) => {
             const params = { 

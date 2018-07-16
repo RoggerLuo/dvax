@@ -9,6 +9,19 @@
 	- 2.定义一个model
 	- 3.连接组件
 	- 4.修改model的值
+- [Model类](#model)
+	- config
+	- create
+	- dispatch 
+	- change
+	- reduce
+	- get
+	- connect
+- [Effect](#effect)
+	- 在effects中使用fetch
+	- change
+	- reduce
+	- get
 * [全局提示：alert](#alert)
 * [淡入淡出动画：fade](#fade)
 
@@ -83,7 +96,7 @@ export default Model.connect('app')( props =>
 )
 ```
 
-# Model类
+#  <span id="model">Model类</span>
 #### modelConfig
 ``` javascript
 {
@@ -127,7 +140,12 @@ Model.get().app === Model.get('app') // true
 可以直接写namespace('modelName'),  
 也可以用传统方式传入mapToState函数
 
-## 在effects中使用fetch
+``` javascript
+Model.connect('app')(App) // 把App组件连接到'app'model
+```
+
+## <span id="effect">effects</span>
+### 在effects中使用fetch
 配置fetch
 
 ```javascript

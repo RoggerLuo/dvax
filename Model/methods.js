@@ -1,7 +1,7 @@
 import sagaParams from './sagaParams'
 import { connect } from 'react-redux'
 import invariant from 'invariant'
-
+import React from 'react'
 export default function(store,sagaMiddleware,config){
     return { 
         put: store.dispatch,
@@ -42,10 +42,31 @@ export default function(store,sagaMiddleware,config){
         store.dispatch({ type: `${namespace}/std`, reducer })
     }
     function _connect(namespace){
+        let mapToState = state => state
         if(typeof(namespace) == 'function') {
-            return connect(namespace)
+            mapToState = namespace
         }
-        if(!namespace) return connect(state=>state)
-        return connect(state=>state[namespace])
+        if(typeof(namespace) == 'string') {
+            mapToState = state => state[namespace]
+        }
+        return (Comp) => {
+            const params = { 
+                reduce(reducer){
+                    reduce(namespace,reducer)
+                }, 
+                change(key,value){
+                    change(namespace,key,value)
+                }, 
+                run(saga){
+                    run(namespace,saga)
+                },
+                put(action){
+                    action.type = `${namespace}/${action.type}`
+                    store.dispatch()
+                } 
+            }   
+            const CompContainer = props => <Comp {...props} {...params}/>
+            return connect(mapToState)(CompContainer)
+        }
     }
 }

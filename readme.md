@@ -137,12 +137,28 @@ Model.get('namespace') // 获取某个特定的model的state
 Model.get().app === Model.get('app') // true
 ```   
 #### Model.connect(namespace/function)
-可以直接写namespace('modelName'),  
-也可以用传统方式传入mapToState函数
+可以用传统方式传入mapToState函数,  
+也可以写成namespace的格式：
 
 ``` javascript
 Model.connect('app')(App) // 把App组件连接到'app'model
 ```
+如果是传入namespace来连接，  
+还会默认给被连接的组件注入reduce、change、run、get等方法，  
+和Model上的方法类似，  
+区别是，注入的方法省略了第一个参数namespace,  
+自动设置为所连接的model的namespace
+
+``` javascript
+function App({ change, reduce, run, get }){
+	const onClick = () => change('key','value')
+	// reduce(state=>{ ... })
+	// get('key')
+	// run(function*(){ ... })
+	return <div onClick={onClick}>abc</div>
+}
+```
+run方法是运行一个effect,(或者说redux-saga)
 
 ## <span id="effect">effects</span>
 ### 在effects中使用fetch
@@ -278,6 +294,6 @@ test('Xss', (t) => {
 })
 ```
 
-## debounce
+
 ## route
 ## 脚手架dvax-starter

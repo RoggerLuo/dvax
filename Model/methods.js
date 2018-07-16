@@ -14,6 +14,7 @@ export default function(store,sagaMiddleware,config){
         run
     }
     function run(namespace,saga){ 
+        invariant(typeof(namespace) === 'string', `Model.run方法第一个参数应该传入namespace`)
         invariant(typeof(saga) === 'function', `run方法应该传入一个generator`)
         function* sagaWrap() {
             yield saga({ 
@@ -52,12 +53,14 @@ export default function(store,sagaMiddleware,config){
         return (Comp) => {
             const params = { 
                 reduce(reducer){
+                    invariant(typeof(reducer) === 'function','reduce方法需要传入一个函数reducer')
                     reduce(namespace,reducer)
-                }, 
+                },
                 change(key,value){
                     change(namespace,key,value)
                 }, 
                 run(saga){
+                    invariant(typeof(saga) === 'function', `run方法应该传入一个generator`)
                     run(namespace,saga)
                 },
                 put(action){

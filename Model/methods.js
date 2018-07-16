@@ -56,10 +56,6 @@ export default function(store,sagaMiddleware,config){
         }
         return (Comp) => {
             const params = {
-                get(key){
-                    if(!key) return store.getState()[namespace]
-                    return store.getState()[namespace][key]
-                },
                 reduce(reducer){
                     invariant(typeof(reducer) === 'function','reduce方法需要传入一个函数reducer')
                     reduce(namespace,reducer)

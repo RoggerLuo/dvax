@@ -150,10 +150,9 @@ Model.connect('app')(App) // 把App组件连接到'app'model
 自动设置为所连接的model的namespace
 
 ``` javascript
-function App({ change, reduce, run, get }){
+function App({ change, reduce, run }){
 	const onClick = () => change('key','value')
 	// reduce(state=>{ ... })
-	// get('key')
 	// run(function*(){ ... })
 	return <div onClick={onClick}>abc</div>
 }

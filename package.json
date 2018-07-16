@@ -1,6 +1,6 @@
 {
   "name": "dvax",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "dva + x",
   "main": "index.js",
   "directories": {

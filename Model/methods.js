@@ -69,7 +69,7 @@ export default function(store,sagaMiddleware,config){
                 },
                 put(action){
                     action.type = `${namespace}/${action.type}`
-                    store.dispatch()
+                    store.dispatch(action)
                 } 
             }   
             const CompContainer = props => <Comp {...props} {...params}/>

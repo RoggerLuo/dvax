@@ -1,7 +1,7 @@
 import invariant from 'invariant'
 import React from 'react'
 import { Provider } from 'react-redux'
-import { ToastComponent } from './Toast'
+import { ToastComponent } from './toast'
 let alreadyStarted = false
 function start(Component,config={}){
     invariant(Component,'dvax.start第一个参数不能为空，需传入react组件')

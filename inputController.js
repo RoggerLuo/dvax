@@ -8,11 +8,7 @@ export default (View,namespace,fieldName,callback) => {
             const oldValue = Model.get(namespace)[fieldName] || ''
             if(callback) 
                 val = callback(val,oldValue)
-            Model.reduce(namespace,state=>{
-                const newObj = {}
-                newObj[fieldName] = val
-                return { ...state, ...newObj, changeOrigin: 'onChange'}
-            })
+            Model.change(namespace,fieldName,val)
         }
         return <View onChange={onChange} value={value||''}/>
     }

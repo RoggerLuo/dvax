@@ -16,7 +16,7 @@ function start(Component,config={}){
     })
     return (
         <Provider store={this._store}>
-            <div>
+            <div style={{height:'100%'}}>
                 <Component/>
                 <ToastComponent/>
             </div>

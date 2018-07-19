@@ -41,7 +41,7 @@ export default function(config) {
             .then(parseText)
             .then(parseJSON)
             .catch(err => {
-                return err.message   
+                return  { error:true, message: err.message, type:'' }
             })
     }
 }

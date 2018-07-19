@@ -6,7 +6,8 @@ export default (namespace,cbs) => ({
         data: [],
         hitBottom: false,
         refreshing: false,
-        fetching: false
+        fetching: false,
+        ref:null
     },
     effects: {
         * fetchData(placeholder,{ fetch, change, reduce, call, put, get }){
@@ -24,11 +25,17 @@ export default (namespace,cbs) => ({
             yield change('refreshing',true)
             yield cbs.refresh({ fetch, change, reduce, call, put, get })
             yield change('refreshing',false)
+            if(get().ref){
+                get().ref.scrollTo({top:0})
+            }
         }
     },
     reducers: {
         hitBottom(state){
             return { ...state, hitBottom: true}
+        },
+        setRef(state,{ element }){
+            return { ...state, ref: element }
         }
     }
 })

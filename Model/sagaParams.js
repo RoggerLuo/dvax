@@ -1,7 +1,7 @@
 import { put, call } from 'redux-saga/effects'
 import invariant from 'invariant'
 
-export default (namespace) => {
+export default (namespace,store) => {
     return { put: prefixedPut, dispatch: prefixedPut, change, reduce, call, get }   
     function prefixedPut(action) {
         action.type = `${namespace}/${action.type}`

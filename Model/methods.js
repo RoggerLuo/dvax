@@ -20,7 +20,7 @@ export default function(store,sagaMiddleware,config){
             yield saga({ 
                 ...config.sagaMethod,
                 ...config.effects, // 注入自定义参数
-                ...sagaParams(namespace)
+                ...sagaParams(namespace,store)
             })  
         }
         sagaMiddleware.run(sagaWrap) 

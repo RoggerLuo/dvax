@@ -6,7 +6,7 @@ import { combineReducers } from 'redux'
 export default function(sagaMiddleware,store,config){
     const reducers = {}
     return (m)=>{ // 这里获得model配置信息
-        const runSingleSaga = runSaga(sagaMiddleware,m.namespace,config)
+        const runSingleSaga = runSaga(sagaMiddleware,m.namespace,config,store)
         injectReducer(m,reducers)
         injectSaga(m.effects,runSingleSaga)
     }

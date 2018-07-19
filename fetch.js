@@ -40,7 +40,9 @@ export default function(config) {
             .then(checkStatus)
             .then(parseText)
             .then(parseJSON)
-            .catch(err => err.message)
+            .catch(err => {
+                return err.message   
+            })
     }
 }
 function parseJSON(text){ // if it can
@@ -59,7 +61,11 @@ function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response
     }else{
-        throw Error(response.status+','+response.statusText)
+        return { 
+            text(){
+                return { error: true, type: response.status, message: response.statusText }
+            }
+        }
     }
 }
 

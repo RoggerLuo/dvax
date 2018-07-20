@@ -23,7 +23,8 @@ export default (namespace,cbs) => ({
             yield change('hitBottom', false)
             if(get().refreshing) return
             yield change('refreshing',true)
-            yield cbs.refresh({ fetch, change, reduce, call, put, get })
+            yield call(cbs.refresh,{ fetch, change, reduce, call, put, get })
+            // yield cbs.refresh({ fetch, change, reduce, call, put, get })
             yield change('refreshing',false)
             if(get().ref){
                 get().ref.scrollTo({top:0})

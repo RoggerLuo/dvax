@@ -25,7 +25,7 @@ class ScrollContainer extends React.Component {
     }
 }
 
-function InifiniteList({ data, put, fetching, refreshing, hitBottom, children, distance, refreshLoadingStyle, ...restthings }){
+function InifiniteList({ data, put,run,change,reduce, fetching, refreshing, hitBottom, children, distance, refreshLoadingStyle, ...restthings }){
     invariant(typeof(distance) == 'number','distance参数是必须的，为一个数字')
     let refreshDefaultStyle = {textAlign:'center',display:'flex',flex:1,position: 'fixed',left: '220px',bottom: 0,top: 0,right: 0,background: '#ffffff73'}    
     if(refreshLoadingStyle) {
@@ -33,7 +33,9 @@ function InifiniteList({ data, put, fetching, refreshing, hitBottom, children, d
     }
     return (
         <ScrollContainer put={put} distance={distance}>
-            {data.map(children)}
+            {data.map((entry,ind)=>{
+                return children(entry,{put,run,change,reduce},ind)
+            })}
             {
                 fetching?
                 (

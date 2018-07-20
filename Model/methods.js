@@ -70,7 +70,11 @@ export default function(store,sagaMiddleware,config){
                 put(action){
                     action.type = `${namespace}/${action.type}`
                     store.dispatch(action)
-                } 
+                },
+                get(_namespace){
+                    if(!_namespace) return store.getState()[namespace]
+                    return store.getState()[_namespace]
+                }
             }   
             const CompContainer = props => <Comp {...props} {...params}/>
             return connect(mapToState)(CompContainer)

@@ -10,7 +10,7 @@ export default (namespace,cbs) => ({
         ref:null
     },
     effects: {
-        * fetchData(placeholder,{ fetch, change, reduce, call, put, get }){
+        * fetchData({ fetch, change, reduce, call, put, get },placeholder){
             if(get().hitBottom) return
             if(get().fetching) return
             yield change('fetching',true)
@@ -19,11 +19,11 @@ export default (namespace,cbs) => ({
             if(isEnd) yield change('hitBottom',true)
             yield change('fetching',false)
         },
-        * refresh(placeholder,{ fetch, change, reduce, call, put, get }){
+        * refresh({ fetch, change, reduce, call, put, get },action){
             yield change('hitBottom', false)
             if(get().refreshing) return
             yield change('refreshing',true)
-            yield call(cbs.refresh,{ fetch, change, reduce, call, put, get })
+            yield call(cbs.refresh,{ fetch, change, reduce, call, put, get },action)
             // yield cbs.refresh({ fetch, change, reduce, call, put, get })
             yield change('refreshing',false)
             if(get().ref){

@@ -7,11 +7,11 @@ export default (sagaMiddleware,namespace,config,store) => (key, cb) => {
     sagaMiddleware.run(createSaga())
     function createSaga() {
         function* saga(action) {
-            yield cb(action,{ 
+            yield cb({
                 ...config.sagaMethod,
                 ...config.effects, // 注入自定义参数
                 ...sagaParams(namespace,store) // 覆盖掉原始的sagaMethod，替换change、reduce等方法
-            })  
+            },action)  
         }
         return function*() {
             yield takeEvery(`${namespace}/${key}`,saga)

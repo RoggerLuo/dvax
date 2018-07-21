@@ -13,8 +13,8 @@ export default function(cbs){
     function fetchData(){
         Model.put({ type: `${namespace}/fetchData` })
     }
-    function refresh(){
-        Model.put({ type: `${namespace}/refresh` })    
+    function refresh(params={}){
+        Model.put({ ...params,type: `${namespace}/refresh`})
     }
     return { component: Component, fetchData, refresh }
 }

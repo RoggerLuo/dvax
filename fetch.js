@@ -36,12 +36,18 @@ export default function(config) {
         if (headers) {
             options.headers = { ...options.headers, ...headers }
         }
+        let onErr = a => a
+        if(config.onErr) onErr = config.onErr
+        if(options.onErr) onErr = options.onErr
         return fetch(url, options)
             .then(checkStatus)
             .then(parseText)
             .then(parseJSON)
+            .then(res=>{
+                return onErr(res)
+            })
             .catch(err => {
-                return  { error:true, message: err.message, type:'' }
+                return onErr({ error:true, message: err.message, type:'' })
             })
     }
 }

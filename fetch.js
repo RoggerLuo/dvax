@@ -13,7 +13,7 @@ export default function(config) {
         if(!baseUrl) baseUrl = ''
         // initial
         options.headers = {}
-        options.credentials = 'include'
+        // options.credentials = 'include'
 
         // url things
         if(baseUrl[baseUrl.length-1] == '/') {
@@ -36,18 +36,18 @@ export default function(config) {
         if (headers) {
             options.headers = { ...options.headers, ...headers }
         }
-        let onErr = a => a
-        if(config.onErr) onErr = config.onErr
-        if(options.onErr) onErr = options.onErr
+        let parser = a => a
+        if(config.parser) parser = config.parser
+        if(options.parser) parser = options.parser
         return fetch(url, options)
             .then(checkStatus)
             .then(parseText)
             .then(parseJSON)
             .then(res=>{
-                return onErr(res)
+                return parser(res)
             })
             .catch(err => {
-                return onErr({ error:true, message: err.message, type:'' })
+                return parser({ error:true, message: err.message })
             })
     }
 }

@@ -1,6 +1,8 @@
 import sagaParams from './sagaParams'
 import { connect } from 'react-redux'
 import invariant from 'invariant'
+import { call } from 'redux-saga/effects'
+
 import React from 'react'
 export default function(store,sagaMiddleware,config){
     return { 
@@ -56,6 +58,7 @@ export default function(store,sagaMiddleware,config){
         }
         return (Comp) => {
             const params = {
+                call,
                 reduce(reducer){
                     invariant(typeof(reducer) === 'function','reduce方法需要传入一个函数reducer')
                     reduce(namespace,reducer)

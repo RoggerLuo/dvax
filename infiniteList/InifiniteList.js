@@ -24,10 +24,10 @@ class ScrollContainer extends React.Component {
         )
     }
 }
-
+// 部分参数从外部调用的时候传递进来
 function InifiniteList({ data, put,run,change,reduce, fetching, refreshing, hitBottom, children, distance, refreshLoadingStyle, empty,...restthings }){
     invariant(typeof(distance) == 'number','distance参数是必须的，为一个数字')
-    let refreshDefaultStyle = {textAlign:'center',display:'flex',flex:1,position: 'fixed',left: '220px',bottom: 0,top: 0,right: 0,background: '#ffffff73'}    
+    let refreshDefaultStyle = {textAlign:'center',display:'flex',flex:1,position: 'fixed',left: '0px',bottom: 0,top: 0,right: 0,background: '#ffffff73'}    
     if(refreshLoadingStyle) {
         refreshDefaultStyle = { ...refreshDefaultStyle, ...refreshLoadingStyle }
     }

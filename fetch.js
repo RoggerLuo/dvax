@@ -30,9 +30,15 @@ export default function(config) {
                 options.body = bodyTransform(options.body)
             }  
         }
-        if (options.query) {
-            url = url + transformQuery(options.query)
+
+        const configQuery = config.query || {}
+        const optionsQuery = options.query || {}
+        const finalQuery = { ...configQuery, ...optionsQuery }
+        if (JSON.stringify(finalQuery) !== "{}") {
+            url = url + transformQuery(finalQuery)
         }
+
+
         if (headers) {
             options.headers = { ...options.headers, ...headers }
         }

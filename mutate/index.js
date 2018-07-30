@@ -1,4 +1,3 @@
-
 function mutate(state){
     return { with: _with, done }
     function done(){
@@ -9,8 +8,23 @@ function mutate(state){
             alert('参数错误，with只接受两个参数')
         }
         let path = params[0]
-        const value = params[1]
         const stack = splitVar(path)
+
+        let value 
+        if(typeof(params[1]) === 'function') {
+            const func = params[1]
+            let temp = state
+            stack.forEach(stru=>{
+                temp = temp[stru.name]
+            })
+            if(temp !== undefined) { // 克隆，为了不修改原始值
+                temp = JSON.parse(JSON.stringify(temp))                                
+            }
+            value = func(temp)
+        }else{
+            value = params[1]            
+        }
+
         state = cloneAssign(value) // 修改state
         return { with: _with, done }
 
@@ -76,4 +90,3 @@ function splitVar(path){
 }
 
 export default mutate
-

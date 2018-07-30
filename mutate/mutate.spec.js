@@ -1,5 +1,5 @@
 import test from 'dvax/test'
-import mutate from './mutate'
+import mutate from './index'
 const state = {
     data: [
         { value: false }
@@ -42,9 +42,37 @@ test('mutate',(t)=>{
             .done()
         return newState.first[1].data[0].value === true
     })
-})
 
-// mutate(state)
-// .with(`data[${index}].value`,value=>!value)
-// .with('all',false)
-// .done()
+    t('函数，操作',()=>{
+        const newState = mutate(complexState)
+            .with('first[1]',state)
+            .with('first[1].data[0].value',val=>!val)
+            .done()
+        return newState.first[1].data[0].value === true
+    })
+
+    t('函数，复杂操作',()=>{
+        const newState = mutate(complexState)
+            .with('first[1]',state)
+            .with('first[1].data[0].value',val=>{return JSON.stringify(val) + 'abc'})
+            .done()
+        return newState.first[1].data[0].value === 'falseabc'
+    })
+    // 不修改原始值
+    t('对象,第二个参数，不会修改原始数据',()=>{
+        const newState = mutate(complexState)
+            .with('first[1]',state)
+            .with('first[1].data[0].value',true)
+            .done()
+        return state.data[0].value ===  false
+    })
+
+    t('函数,第二个参数，不会修改原始数据',()=>{
+        const newState = mutate(complexState)
+            .with('first[1]',state)
+            .with('first[1]',val => { val.data[0].value = true })
+            .done()
+        return state.data[0].value === false
+    })
+
+})

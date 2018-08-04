@@ -20,9 +20,10 @@ const contentStyle = {
     padding: '25px',
     borderRadius: '4px',
     backgroundColor: '#333333e6',
+    backgroundColor: 'rgba(51, 51, 51, 0.9)',
     color: 'white',
     fontSize: '14px',
-    lineHeight: '1'
+    lineHeight: '1.5'
 }
 
 export default connect(state => state['dvaxToast'])(props=>{

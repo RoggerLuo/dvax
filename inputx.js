@@ -1,7 +1,7 @@
 import React from 'react'
 import { Model } from './index.js'
 import invariant from 'invariant'
-export default (View,namespace) => {
+export default (namespace,View) => {
     const component = ({ fieldName, callback, change, get, ...rest }) => {
         invariant(!!fieldName,'fieldName不合法')
         const value = rest[fieldName]

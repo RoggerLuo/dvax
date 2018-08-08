@@ -18,12 +18,13 @@ class ScrollContainer extends React.Component {
             }
         }
         return  (
-            <div ref={this.setRef} style={{height:'100%',overflow:'auto',display:'flex', flexDirection: 'column'}} onScroll={onScroll}>
+            <div ref={this.setRef} style={{height:'100%',overflow:'auto'}} onScroll={onScroll}>
                 {this.props.children}
             </div>
         )
     }
 }
+//display:'flex', flexDirection: 'column'
 // 部分参数从外部调用的时候传递进来
 function InifiniteList({ data, put,run,change,reduce, fetching, refreshing, hitBottom, children, distance, refreshLoadingStyle, empty,...restthings }){
     invariant(typeof(distance) == 'number','distance参数是必须的，为一个数字')

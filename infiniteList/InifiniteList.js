@@ -34,7 +34,13 @@ function InifiniteList({ data, put,run,change,reduce, fetching, refreshing, hitB
     }
     return (
         <ScrollContainer put={put} distance={distance}>
-            {data.length === 0 && empty || null}
+            {(function(){
+                if(data.length === 0){
+                    if(!empty) return null
+                    return <div style={{height:'100%',display:'flex'}}>{empty}</div>
+                } 
+                return null
+            })()}
             {data.map((entry,ind)=>{
                 return children(entry,{put,run,change,reduce},ind)
             })}

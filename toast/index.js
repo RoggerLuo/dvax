@@ -32,5 +32,5 @@ export default function(message,duration,status){
     },duration)
     setTimeout(function(){
         Model.dispatch({type:'dvaxToast/clear'})
-    },duration+100)
+    },duration+300)
 }

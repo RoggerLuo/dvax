@@ -5,7 +5,7 @@ import ToastComponent from './toast/Component'
 let alreadyStarted = false
 function start(Component,config={}){
     invariant(Component,'dvax.start第一个参数不能为空，需传入react组件')
-    invariant(!alreadyStarted,'dvax已经初始化过一次了')
+    // invariant(!alreadyStarted,'dvax已经初始化过一次了')
     if(!alreadyStarted) {
         alreadyStarted = true
         invariant(typeof(config) ==='object','config文件应该为object')

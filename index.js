@@ -5,7 +5,6 @@ import getModel from './Model/index.js'
 import start, { onStart } from './start.js'
 const app = {
     _store: null,
-    _constants: {},
     _onStart: [],
     _config: { effects: {} }, //初始值，后面会用到
     onStart,

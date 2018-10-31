@@ -1,7 +1,7 @@
 import invariant from 'invariant'
 import React from 'react'
 import { Provider } from 'react-redux'
-import ToastComponent from './toast/Component'
+import getToast from './toast/getComponent'
 let alreadyStarted = false
 function start(Component,config={}){
     invariant(Component,'dvax.start第一个参数不能为空，需传入react组件')
@@ -16,11 +16,12 @@ function start(Component,config={}){
             cb && cb()
         })
     }
+    const Toast = getToast(this._model)
     return (
         <Provider store={this._store}>
             <div style={{height:'100%'}}>
                 <Component/>
-                <ToastComponent/>
+                <Toast/>
             </div>
         </Provider>
     )

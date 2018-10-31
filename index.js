@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import getModel from './Model/index.js'
 import start, { onStart } from './start.js'
 const app = {
+    _model:null,
     _store: null,
     _onStart: [],
     _config: { effects: {} }, //初始值，后面会用到
@@ -22,5 +23,6 @@ const _connect = reducerName => {
 }
 
 export const Model = getModel(app._store,app._config,sagaMiddleware)
+app._model = Model
 export { connect }
 export default app

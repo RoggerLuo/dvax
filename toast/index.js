@@ -2,22 +2,7 @@ import invariant from 'invariant'
 import React from 'react'
 import { Model } from '../index.js'
 let showing = false
-Model.create({
-    namespace:'dvaxToast',
-    state:{ status:false, message:'', show:false },
-    reducers:{
-        show(state,{ status, message }){
-            return { ...state, show: true, message, status}
-        },
-        hide(state){
-            return { ...state, show:false}
-        },
-        clear(state){
-            showing = false
-            return { ...state, message:'', status:false}
-        }
-    }
-})
+
 
 export default function(message,duration,status){
     if(showing) return

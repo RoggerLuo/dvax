@@ -13,7 +13,7 @@
 #### 安装  
 
 ``` bash
->npm install --save dvax
+> npm install --save dvax
 ```
 #### 应用入口文件
 

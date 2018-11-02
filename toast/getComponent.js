@@ -28,7 +28,7 @@ const contentStyle = {
 
 export default Model => {
     Model.create({
-        namespace:'dvaxToast',
+        namespace:'dvaxToast' + Date.now(),
         state:{ status:false, message:'', show:false },
         reducers:{
             show(state,{ status, message }){

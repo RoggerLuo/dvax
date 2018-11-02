@@ -1,28 +1,11 @@
-#dvax
+#dvax@1.0.35
 更简单的redux
 
 - [开始使用](#guide1)  
-	- 安装
-	- 应用入口文件
-- [用dvax管理组件数据](#guide2)
-	- 1.引入model类
-	- 2.定义一个model
-	- 3.连接组件
-	- 4.修改model的值
+- [Tutorial: 用dvax管理组件数据](#guide2)
 - [Model类](#model)
-	- config
-	- create
-	- dispatch 
-	- change
-	- reduce
-	- get
-	- connect
 - [Effect](#effect)
-	- 在effects中使用fetch
-	- change
-	- reduce
-	- get
-* [全局提示：alert](#alert)
+* [全局提示：toast](#alert)
 * [淡入淡出动画：fade](#fade)
 
 
@@ -30,7 +13,7 @@
 #### 安装  
 
 ``` bash
-npm install --save dvax
+>npm install --save dvax
 ```
 #### 应用入口文件
 
@@ -44,22 +27,23 @@ render(
 	document.getElementById('root')
 )
 ```
-请确保运行环境支持Generator、Promise、fetch等API,  
+确保运行环境支持Generator、Promise、fetch等API,  
 以及拓展运算符和Object对象上的assign、keys等方法
 
-或者可以使用 [dvax-starter](http://wwwbaidu.com) 脚手架
+#### 或者使用 `dvax-starter` 脚手架
 
-## <span id="guide2">用dvax管理组件数据</span>
-
-#### 1.引入Model类
-``` javascript
-import { Model } from 'dvax'
-
-function Example({ title }){
-	return <div>{title}</div>
-}
+```bash
+> npm install -g dvax-starter
+> dvax init
 ```
-#### 2.定义一个model
+
+## <span id="guide2">Tutorial: 用dvax管理组件数据</span>
+
+#### 引入Model
+```javascript
+import { Model } from 'dvax'
+```
+#### 定义一个model
 ```javascript
 const model = {
 	namespace: 'app',
@@ -67,33 +51,31 @@ const model = {
 }
 Model.create(model) // 用Model类的create方法
 ```
-#### 3.连接组件
+#### 连接组件
 ``` javascript 
-Model.connect('app')(Example) // 直接写namespace
-```
-#### 4.修改model的值
-``` javascript
-const changeTitle = () => {
-	// 第一个参数是namespace，第二个是key，第三个是要更新的value
-	Model.change('app','title',`I'm new title`)
+function Example({ title }){
+	return <div>{title}</div>
 }
+Model.connect('app')(Example) // connect中直接写namespace
 ```
-#### 写在一起，一气呵成
-一个完整、独立、可交互、数据驱动的组件
-
-``` javascript 
-import { Model, connect } from 'dvax' 
-
+#### 改变model的状态
+```javascript
+change('title',`I'm new title`) // 第一个参数是key，第二个是要更新的valu	
+```
+#### 一个完整、独立、可交互、数据驱动的组件
+``` javascript
+import { Model, connect } from 'dvax'
 Model.create({
 	namespace: 'app',
 	state: { title: 'defaultTitle' }
 })
-
-export default Model.connect('app')( props =>
-	<div onClick={()=>Model.change('app','title',`I'm new title`)}>
-		{props.title}
-	</div>
-)
+function Example({ title, change }){ // change方法注入，来自connect
+	const changeTitle = () => {
+		change('title',`I'm new title`) 
+	}
+	return <div onClick={changeTitle}>{title}</div>
+}
+Model.connect('app')(Example)
 ```
 
 #  <span id="model">Model类</span>
@@ -111,15 +93,15 @@ export default Model.connect('app')( props =>
 }
 ```
 #### Model.create(modelConfig)
-根据config创建一个Model，加入到dvax中，  
-可以动态创建
+动态创建一个Model
+
 #### Model.dispatch(action)
 同redux的dispatch
 #### Model.change(namespace,key,value)
 改变model的state中某一个field/key的值
 
 #### Model.reduce(namespace,function(state))
-对model的state进行更迭，  
+替换model的state，  
 函数的返回值将作为新的state
 
 ```javascript
@@ -136,30 +118,40 @@ Model.get() // 获取所有state
 Model.get('namespace') // 获取某个特定的model的state
 Model.get().app === Model.get('app') // true
 ```   
+#### Model.run(namespace,effect) 
+run方法是运行一个effect,(或者说redux-saga)
+
+```javascript
+Model.run('app',function*({fetch,get,change,reduce}}){
+	// get, change, reduce用法见下面的“注入方法”
+})
+```
+
 #### Model.connect(namespace/function)
-可以用传统方式传入mapToState函数,  
-也可以写成namespace的格式：
+可以用传统方式传入mapToState函数，也可以写成namespace的格式：
 
 ``` javascript
 Model.connect('app')(App) // 把App组件连接到'app'model
 ```
-如果是传入namespace来连接，  
-还会默认给被连接的组件注入reduce、change、run、get等方法，  
-和Model上的方法类似，  
-区别是，注入的方法省略了第一个参数namespace,  
-自动设置为所连接的model的namespace
+
+传入namespace来连接，  
+被连接的组件会拥有**注入方法**：reduce、change、run和get，    
+
+注入方法和Model上的同名方法的使用方式相似，  
+他们的区别是：注入方法省略了第一个参数(namespace)
+
 
 ``` javascript
 function App({ change, reduce, run }){
 	const onClick = () => change('key','value')
-	// reduce(state=>{ ... })
-	// run(function*(){ ... })
+	// 或者
+	// const onClick = () => Model.change('app','key','value')
 	return <div onClick={onClick}>abc</div>
 }
 ```
-run方法是运行一个effect,(或者说redux-saga)
 
-## <span id="effect">effects</span>
+
+## <span id="effect">Effects</span>
 ### 在effects中使用fetch
 配置fetch
 
@@ -179,6 +171,7 @@ dvax.start(App,{ effects: { fetch } }) // 初始化dvax，并向saga的参数中
 在model中，
 
 ``` javascript
+// 定义
 {
 	namespace:'example',
 	effects:{
@@ -194,8 +187,7 @@ Model.dispatch({ type:'fetchDate' })
 
 ## onStart
 如果在dvax.start之前，  
-dispatch effects向远端拿数据，会失败，  
-因为fetch还未注入， 
+dispatch effects向远端拿数据会失败，因为fetch还未注入， 
 可以把dispatch的语句放在onStart中
 
 ``` javascript
@@ -205,40 +197,12 @@ dvax.onStart(function(){
 	Model.dispatch({ type: 'fetchData' })
 })
 ```
-## Controlled input: inputController组件
-帮input自动绑定model，  
-暴露出一个拦截器函数，可以干涉输入过程，做一些校验和监听，  
-视图input组件接受onChange和value两个props
-
-``` javascript
-import inputController from 'dvax/inputController'
-const MyInput = ({onChange,value}) => {
-	return <input type="text" onChange={onChange} value={value} />
-}
-const ControllerdInput = inputController(
-	MyInput,
-	'name of model',
-	'field or key',
-	(newVal,oldVal)=>{
-		// do something when input change
-	}
-)
-// 使用
-<ControllerdInput />
-```
-## <span id="alert">全局提示：alert</span>
-先把`Alert标签`放在全局任何一个地方
+## <span id="alert">全局提示：Toast</span>
 
 ```javascript
-import Alert from 'dvax/alert'
-<Alert/>
-```
-然后引用小写alert(记得加大括号)使用
-
-```javascript
-import { alert } from 'dvax/alert'
-alert('上传成功',2000,'good')
-alert('上传失败',2000,'bad')
+import toast from 'dvax/toast'
+toast('上传成功',2000,'good')
+toast('上传失败',2000,'bad')
 ```
 
 ## <span id="fade">淡入淡出动画：fade</span>
@@ -293,6 +257,3 @@ test('Xss', (t) => {
 })
 ```
 
-
-## route
-## 脚手架dvax-starter

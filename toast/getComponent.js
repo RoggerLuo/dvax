@@ -27,8 +27,9 @@ const contentStyle = {
 }
 
 export default Model => {
+    const namespace = 'dvaxToast' + Date.now()
     Model.create({
-        namespace:'dvaxToast' + Date.now(),
+        namespace,
         state:{ status:false, message:'', show:false },
         reducers:{
             show(state,{ status, message }){
@@ -43,7 +44,7 @@ export default Model => {
             }
         }
     })
-    return connect(state => state['dvaxToast'])(props=>{
+    return connect(state => state[namespace])(props=>{
         return (
             <Fade duration={300} show={props.show} style={wrapStyle}>
                 <div style={contentStyle}>

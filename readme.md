@@ -1,13 +1,10 @@
-#dvax@1.0.35
+#dvax@1.0.37
 更简单的redux
 
 - [开始使用](#guide1)  
 - [Tutorial: 用dvax管理组件数据](#guide2)
 - [Model类](#model)
 - [Effect](#effect)
-* [全局提示：toast](#alert)
-* [淡入淡出动画：fade](#fade)
-
 
 ## <span id="guide1">开始使用</span>
 #### 安装  

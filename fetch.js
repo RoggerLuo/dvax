@@ -42,7 +42,7 @@ export default function(config) {
             .then(config.parseText || parseText)
             .then(config.parseJSON || parseJSON)
             .then(config.receiveData || receiveData)
-            .catch(err => receiveData({ hasError:true, error: err }))
+            .catch(err => receiveData({ hasErrors:true, error: err }))
     }
 }
 function receiveData(res){

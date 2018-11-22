@@ -20,7 +20,7 @@ function start(Component,config={}){
     return (
         <Provider store={this._store}>
             <div style={{height:'100%'}}>
-                <Component/>
+                {Component}
                 <Toast/>
             </div>
         </Provider>

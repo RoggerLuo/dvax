@@ -3,12 +3,6 @@
   "version": "0.1.40",
   "description": "dva + x",
   "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
-  "scripts": {
-    "test": "none"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RoggerLuo/dvax.git"

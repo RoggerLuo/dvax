@@ -13,7 +13,7 @@ export default function(config) {
         if (!options.method) options.method = "GET"
         options.method = options.method.toUpperCase()
         // config        
-        let { baseUrl, headers, bodyTransform } = config
+        let { baseUrl, headers, requestBody } = config
         if(!baseUrl) baseUrl = ''
         if(baseUrl[baseUrl.length-1] == '/') {
             url = baseUrl + url
@@ -22,8 +22,8 @@ export default function(config) {
         }
         // apply config to options
         if (options.method === 'POST' || options.method === 'PUT') {
-            if(bodyTransform){
-                options.body = bodyTransform(options.body)
+            if(requestBody){
+                options.body = requestBody(options.body)
             }  
         }
         if (headers) {

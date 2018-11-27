@@ -12,6 +12,7 @@ export default function(config) {
         } 
         if (!options.method) options.method = "GET"
         options.method = options.method.toUpperCase()
+        options.credentials = 'include'
         // config        
         let { baseUrl, headers, requestBody } = config
         if(!baseUrl) baseUrl = ''

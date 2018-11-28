@@ -7,11 +7,15 @@ export default (sagaMiddleware,namespace,config,store) => (key, cb) => {
     sagaMiddleware.run(createSaga())
     function createSaga() {
         function* saga(action) {
-            yield cb({
-                ...config.sagaMethod,
-                ...config.effects, // 注入自定义参数
-                ...sagaParams(namespace,store) // 覆盖掉原始的sagaMethod，替换change、reduce等方法
-            },action)  
+            try{
+                yield cb({
+                    ...config.sagaMethod,
+                    ...config.effects, // 注入自定义参数
+                    ...sagaParams(namespace,store) // 覆盖掉原始的sagaMethod，替换change、reduce等方法
+                },action)  
+            }catch(err){                
+                throw `\n\n model"${namespace}"的effect"${key}"出错，\n\n 出错的Generator为: \n\n ${cb.toString()}`
+            }
         }
         return function*() {
             yield takeEvery(`${namespace}/${key}`,saga)

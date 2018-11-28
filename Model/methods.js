@@ -19,11 +19,15 @@ export default function(store,sagaMiddleware,config){
         invariant(typeof(namespace) === 'string', `Model.run方法第一个参数应该传入namespace`)
         invariant(typeof(saga) === 'function', `run方法应该传入一个generator`)
         function* sagaWrap(action) {
-            yield saga({ 
-                ...config.sagaMethod,
-                ...config.effects, // 注入自定义参数
-                ...sagaParams(namespace,store)
-            },action)  
+            try{
+                yield saga({ 
+                    ...config.sagaMethod,
+                    ...config.effects, // 注入自定义参数
+                    ...sagaParams(namespace,store)
+                },action)  
+            }catch(err){                
+                throw `\n\n model"${namespace}"的run方法出错，\n\n 出错的Generator为: \n\n ${saga.toString()}`
+            }
         }
         sagaMiddleware.run(sagaWrap) 
     }

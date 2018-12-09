@@ -15,12 +15,12 @@ export default function(store,sagaMiddleware,config){
         fetch,
         run
     }
-    function run(namespace,saga){ 
+    function run(namespace,sageEffect){ 
         invariant(typeof(namespace) === 'string', `Model.run方法第一个参数应该传入namespace`)
-        invariant(typeof(saga) === 'function', `run方法应该传入一个generator`)
+        invariant(typeof(sageEffect) === 'function', `run方法应该传入一个generator`)
         function* sagaWrap(action) {
             try{
-                yield saga({ 
+                yield sageEffect({ 
                     ...config.sagaMethod,
                     ...config.effects, // 注入自定义参数
                     ...sagaParams(namespace,store)

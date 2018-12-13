@@ -26,7 +26,7 @@ export default function(store,sagaMiddleware,config){
                     ...sagaParams(namespace,store)
                 },action)  
             }catch(err){                
-                throw `\n\n model"${namespace}"的run方法出错，\n\n 出错的Generator为: \n\n ${saga.toString()}`
+                throw `\n\n model"${namespace}"的run方法出错，请自行try catch排查 \n\n 出错的Generator为: \n\n ${sageEffect.toString()}`
             }
         }
         sagaMiddleware.run(sagaWrap) 

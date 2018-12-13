@@ -26,6 +26,8 @@ export default function(config) {
             if(requestBody){
                 options.body = requestBody(options.body)
             }  
+        }else{
+            invariant(!options.body,'当前http方法不应含有body，忘记写{method:post}了吧') 
         }
         if (headers) {
             options.headers = { ...options.headers, ...headers }

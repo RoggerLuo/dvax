@@ -57,7 +57,7 @@ export default function(store,sagaMiddleware,config){
         if(typeof(namespace) === 'string') {
             if(namespace.length){
                 mapToState = state => {
-                    const finalState = {}
+                    let finalState = {}
                     namespace.forEach(el=>{
                         finalState = {...finalState,...state[el]}
                     })

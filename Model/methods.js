@@ -54,18 +54,17 @@ export default function(store,sagaMiddleware,config){
             mapToState = namespace
             return connect(mapToState)
         }
+        if(typeof(namespace) === 'object') {
+            mapToState = state => {
+                let finalState = {}
+                namespace.forEach(el=>{
+                    finalState = {...finalState,...state[el]}
+                })
+                return finalState
+            }            
+        }
         if(typeof(namespace) === 'string') {
-            if(namespace.length){
-                mapToState = state => {
-                    let finalState = {}
-                    namespace.forEach(el=>{
-                        finalState = {...finalState,...state[el]}
-                    })
-                    return finalState
-                }
-            }else{
-                mapToState = state => state[namespace]                
-            }
+            mapToState = state => state[namespace]                
         }
         if(!namespace){
             return connect()

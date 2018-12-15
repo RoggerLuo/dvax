@@ -2,7 +2,6 @@ import sagaParams from './sagaParams'
 import { connect } from 'react-redux'
 import invariant from 'invariant'
 import { call } from 'redux-saga/effects'
-
 import React from 'react'
 export default function(store,sagaMiddleware,config){
     return { 
@@ -50,12 +49,22 @@ export default function(store,sagaMiddleware,config){
     }
     function _connect(namespace){
         let mapToState
-        if(typeof(namespace) == 'function') {
+        if(typeof(namespace) === 'function') {
             mapToState = namespace
             return connect(mapToState)
         }
-        if(typeof(namespace) == 'string') {
-            mapToState = state => state[namespace]
+        if(typeof(namespace) === 'string') {
+            if(namespace.length){
+                mapToState = state => {
+                    const finalState = {}
+                    namespace.forEach(el=>{
+                        finalState = {...finalState,...state[el]}
+                    })
+                    return finalState
+                }
+            }else{
+                mapToState = state => state[namespace]                
+            }
         }
         if(!namespace){
             return connect()

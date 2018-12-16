@@ -35,6 +35,11 @@ function mutate(state){
             stack.forEach(stru=>{
                 temp = temp[stru.name]
             })
+
+            if(!temp) { // 如果没有temp，说明可能是path写错了
+                throw Error(`找不到对应的属性，数据路径可能存在问题: "${path}" \n\n 被修改的state为{${Object.keys(state).join(',')}} \n`)
+            }
+
             // 克隆上一级结构的变量
             if(temp.slice && typeof(temp.slice) === 'function') { //如果有slice方法,则是数组
                 temp = [...temp]

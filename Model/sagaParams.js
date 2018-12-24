@@ -9,7 +9,7 @@ export default (namespace,store) => {
     }
     function change(key,value){
         invariant(key,'change方法需要传入namespace，key')
-        invariant(value !== undefined,'change方法需要传入value')
+        // invariant(value !== undefined,'change方法需要传入value')
         return put({ type: `${namespace}/change`, key, value })
     }
     function reduce(reducer){

@@ -14,7 +14,7 @@ export default (sagaMiddleware,namespace,config,store) => (key, sageEffect) => {
                     ...sagaParams(namespace,store) // 覆盖掉原始的sagaMethod，替换change、reduce等方法
                 },action)  
             }catch(err){                
-                console.log(`\n\n model"${namespace}"的run方法出错，请自行try catch排查 \n\n 出错的Generator为: \n\n ${sageEffect.toString()}`)
+                console.log(`\n\n model"${namespace}"的run方法出错\n\n 出错的Generator为: \n\n ${sageEffect.toString()}`)
                 throw err 
             }
         }

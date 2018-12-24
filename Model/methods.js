@@ -40,7 +40,7 @@ export default function(store,sagaMiddleware,config){
     }
     function change(namespace,key,value){
         invariant(namespace && key,'Model change方法需要传入namespace，key')
-        invariant(value !== undefined,'Model change方法需要传入value')
+        // invariant(value !== undefined,'Model change方法需要传入value')
         store.dispatch({ type: `${namespace}/change`, key, value })
     }
     function reduce(namespace,reducer){

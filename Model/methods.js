@@ -55,10 +55,12 @@ export default function(store,sagaMiddleware,config){
             return connect(mapToState)
         }
         if(typeof(namespace) === 'string') {
-            if(state[namespace]===undefined) {
-                throw Error(`无法连接Model，因为namespace为"${namespace}"的Model不存在，请检查namespace的拼写`)
+            mapToState = state => {
+                if(state[namespace]===undefined) {
+                    throw Error(`无法连接Model，因为namespace为"${namespace}"的Model不存在，请检查namespace的拼写`)
+                }
+                state[namespace]
             }
-            mapToState = state => state[namespace]
         }
         if(!namespace){
             return connect()

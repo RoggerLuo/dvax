@@ -59,7 +59,7 @@ export default function(store,sagaMiddleware,config){
                 if(state[namespace]===undefined) {
                     throw Error(`无法连接Model，因为namespace为"${namespace}"的Model不存在，请检查namespace的拼写`)
                 }
-                state[namespace]
+                return state[namespace]
             }
         }
         if(!namespace){

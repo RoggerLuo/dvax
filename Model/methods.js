@@ -54,9 +54,11 @@ export default function(store,sagaMiddleware,config){
             mapToState = namespace
             return connect(mapToState)
         }
-
         if(typeof(namespace) === 'string') {
-            mapToState = state => state[namespace]                
+            if(state[namespace]===undefined) {
+                throw Error(`无法连接Model，因为namespace为"${namespace}"的Model不存在，请检查namespace的拼写`)
+            }
+            mapToState = state => state[namespace]
         }
         if(!namespace){
             return connect()
@@ -74,7 +76,6 @@ export default function(store,sagaMiddleware,config){
             namespace = namespace[namespace.length-1] //放在最后，不然变成字符串之后会出事
         }
         return (Comp) => {
-
             const params = {
                 call,
                 reduce(reducer){
@@ -97,8 +98,8 @@ export default function(store,sagaMiddleware,config){
                     return store.getState()[_namespace]
                 }
             }   
-            const CompContainer = props => <Comp {...props} {...params}/>
-            return connect(mapToState)(CompContainer)
+            const Container = props => <Comp {...props} {...params}/>
+            return connect(mapToState)(Container)
         }
     }
 }

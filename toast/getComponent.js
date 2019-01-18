@@ -40,7 +40,7 @@ export default Model => {
                     return { ...state, show:false}
                 },
                 clear(state){
-                    showing = false
+                    // showing = false
                     return { ...state, message:'', status:false}
                 }
             }

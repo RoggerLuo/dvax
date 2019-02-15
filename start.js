@@ -8,10 +8,6 @@ function start(Component,config={}){
     // invariant(!alreadyStarted,'dvax已经初始化过一次了')
     if(!alreadyStarted) {
         alreadyStarted = true
-        invariant(typeof(config) ==='object','config文件应该为object')
-        Object.keys(config).forEach(key=>{
-            this._config[key] = config[key]               
-        })
         this._onStart.forEach(cb=>{
             cb && cb()
         })
@@ -29,4 +25,12 @@ function start(Component,config={}){
 export function onStart(cb){
     this._onStart.push(cb)
 }
+export function config(configObj){
+    invariant(typeof(configObj) ==='object','config文件应该为object')
+    Object.keys(configObj).forEach(key=>{
+        this._config[key] = configObj[key]               
+    })
+
+}
+
 export default start 

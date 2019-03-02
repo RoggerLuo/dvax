@@ -45,7 +45,10 @@ export default function(config) {
             .then(config.parseText || parseText)
             .then(config.parseJSON || parseJSON)
             .then(config.receiveData || receiveData)
-            // .catch(err => receiveData({ hasErrors:true, error: err }))
+            // .catch(err => {
+            //     console.log(err)
+            // })
+            //receiveData({ hasErrors:true, error: err })
     }
 }
 function receiveData(res){
@@ -59,8 +62,8 @@ function parseJSON(text){ // if it can
     }
 }
 function parseText(response) {
-    if(response.status === 404) {
-        return {message:response.text(),httpStatus:404}
+    if(response.status >= 400) {
+        return {message:response.text(),httpStatus:response.status}
     }
     return response.text()
 }

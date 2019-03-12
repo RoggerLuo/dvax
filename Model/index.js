@@ -1,6 +1,7 @@
 import invariant from 'invariant'
 import injectModel from './injectModel.js'
 import getMethods from './methods.js'
+import getMethodsShorcut from './methodsShortcut.js'
 
 export default function(store,config,sagaMiddleware){
     const methods = getMethods(store,sagaMiddleware,config)
@@ -8,5 +9,6 @@ export default function(store,config,sagaMiddleware){
     return { 
         ...methods,
         create: injectModel(sagaMiddleware,store,config),
+        assign: getMethodsShorcut(store,sagaMiddleware,config)
     }
 }

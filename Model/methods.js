@@ -5,7 +5,7 @@ import { call } from 'redux-saga/effects'
 import React from 'react'
 export default function(store,sagaMiddleware,config){
     return { 
-        put: prefixedPut,
+        put: store.dispatch,
         dispatch: store.dispatch,
         connect: _connect,
         get,
@@ -13,10 +13,6 @@ export default function(store,sagaMiddleware,config){
         reduce,
         fetch,
         run
-    }
-    function prefixedPut(action) {
-        action.type = `${namespace}/${action.type}`
-        return store.dispatch(action)
     }
 
     function run(namespace,sageEffect){ 

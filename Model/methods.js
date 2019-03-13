@@ -5,7 +5,7 @@ import { call } from 'redux-saga/effects'
 import React from 'react'
 export default function(store,sagaMiddleware,config){
     return { 
-        put: store.dispatch,
+        put: prefixedPut,
         dispatch: store.dispatch,
         connect: _connect,
         get,
@@ -14,6 +14,11 @@ export default function(store,sagaMiddleware,config){
         fetch,
         run
     }
+    function prefixedPut(action) {
+        action.type = `${namespace}/${action.type}`
+        return store.dispatch(action)
+    }
+
     function run(namespace,sageEffect){ 
         invariant(typeof(namespace) === 'string', `Model.run方法第一个参数应该传入namespace`)
         invariant(typeof(sageEffect) === 'function', `run方法应该传入一个generator`)

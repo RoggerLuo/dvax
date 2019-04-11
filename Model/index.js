@@ -1,4 +1,4 @@
-import invariant from 'invariant'
+// import invariant from 'invariant'
 import injectModel from './injectModel.js'
 import getMethods from './methods.js'
 import getMethodsShorcut from './methodsShortcut.js'

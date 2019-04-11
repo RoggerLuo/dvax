@@ -49,7 +49,7 @@ export default (store,sagaMiddleware,config) => namespace => {
         store.dispatch({ type: `${namespace}/change`, key, value })
     }
     function reduce(reducer){
-        invariant(typeof(namespace) == 'string','Model reduce方法需要传入namespace，为string')
+        invariant(typeof(namespace) === 'string','Model reduce方法需要传入namespace，为string')
         invariant(namespace && reducer,'Model reduce方法需要传入namespace，reducer')
         store.dispatch({ type: `${namespace}/std`, reducer })
     }

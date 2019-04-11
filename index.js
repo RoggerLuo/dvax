@@ -15,13 +15,13 @@ const app = {
 const sagaMiddleware = createSagaMiddleware()
 app._store = createStore(a => a, applyMiddleware(sagaMiddleware))
 
-const _connect = reducerName => {
-    if(typeof(reducerName) == 'function') {
-        return connect(reducerName)
-    }
-    if(!reducerName) return connect(state=>state)
-    return connect(state=>state[reducerName])
-}
+// const _connect = reducerName => {
+//     if(typeof(reducerName) == 'function') {
+//         return connect(reducerName)
+//     }
+//     if(!reducerName) return connect(state=>state)
+//     return connect(state=>state[reducerName])
+// }
 
 export const Model = getModel(app._store,app._config,sagaMiddleware)
 app._model = Model

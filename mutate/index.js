@@ -58,13 +58,13 @@ function mutate(state){
                 return temp
             }
         }
-        return { with: _with }
+        // return { with: _with }
     }
 }
 // 判断第一个结构
 function splitVar(path){
     path = path.replace(/"|'/g,'')
-    const index = path.length - 1
+    // const index = path.length - 1
     const returnValue = []
     splitOne(path,returnValue)
     function splitOne(path,returnValue){
@@ -89,6 +89,7 @@ function splitVar(path){
                 returnValue.push({ name: path, type: 'key' })
                 return true
             }
+            return false
         })
     }
     return returnValue.filter(el=>el.name!=="") // [{ name, type },]

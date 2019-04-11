@@ -1,4 +1,4 @@
-import invariant from 'invariant'
+// import invariant from 'invariant'
 import React from 'react'
 import Fade from '../fade.js'
 import okPng from './ok.png'
@@ -19,7 +19,7 @@ const contentStyle = {
     textAlign: 'center',
     padding: '25px',
     borderRadius: '4px',
-    backgroundColor: '#333333e6',
+    background: '#333333e6',
     backgroundColor: 'rgba(51, 51, 51, 0.9)',
     color: 'white',
     fontSize: '14px',
@@ -51,8 +51,8 @@ export default Model => {
             <Fade duration={300} show={props.show} style={wrapStyle}>
                 <div style={contentStyle}>
                     <div>
-                        {props.status=='good'?(<img src={okPng} style={{marginBottom:'10px',width:'40px'}}/>):null}
-                        {props.status=='bad'?(<img src={notOkPng} style={{marginBottom:'10px',width:'40px'}}/>):null}
+                        {props.status==='good'?(<img src={okPng} alt="" style={{marginBottom:'10px',width:'40px'}}/>):null}
+                        {props.status==='bad'?(<img src={notOkPng} alt="" style={{marginBottom:'10px',width:'40px'}}/>):null}
                     </div>
                     {props.message}
                 </div>

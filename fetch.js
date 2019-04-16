@@ -23,9 +23,14 @@ export default function(config) {
         }
         // apply config to options
         if (options.method === 'POST' || options.method === 'PUT') {
-            if(requestBody){
+            
+            if(options.requestBody) {
+                options.body = options.requestBody(options.body)
+            }
+            if(!options.requestBody && requestBody){
                 options.body = requestBody(options.body)
             }  
+
         }else{
             invariant(!options.body,'当前http方法不应含有body，忘记写{method:post}了吧') 
         }

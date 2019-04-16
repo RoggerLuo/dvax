@@ -30,7 +30,7 @@ export default function(config) {
             invariant(!options.body,'当前http方法不应含有body，忘记写{method:post}了吧') 
         }
         if (headers) {
-            options.headers = { ...options.headers, ...headers }
+            options.headers = {  ...headers, ...options.headers }
         }
         // support query
         const configQuery = config.query || {}

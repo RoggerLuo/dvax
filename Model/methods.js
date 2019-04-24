@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import invariant from 'invariant'
 import { call } from 'redux-saga/effects'
 import React from 'react'
+import _mutate from '../mutate'
+
 export default function(store,sagaMiddleware,config){
     return { 
         put: store.dispatch,
@@ -12,9 +14,46 @@ export default function(store,sagaMiddleware,config){
         change,
         reduce,
         fetch,
-        run
+        run,
+        mutate,
+        delete:_delete
     }
-
+    function _delete(namespace,key){
+        /* 
+            1.key: abc.efg
+            2.key: abc[3]
+         */
+        let index
+        let reducer
+        if(key.slice(-1)===']'){ // the second situation
+            index = key.slice(key.lastIndexOf('['),key.lastIndexOf(']'))
+            key = key.slice(0,key.lastIndexOf('['))
+            reducer = state => _mutate(state).with(key,data=>{
+                if(!(data instanceof Array)) {
+                    throw Error(`key "${key}" is not a array, please check your data structure`)
+                }
+                const newData = [...data]
+                newData.splice(index,1)
+                return newData    
+            }).done()
+        }else{
+            const delete_key = key.slice(key.lastIndexOf('.')+1)
+            key = key.slice(0,key.lastIndexOf('.'))
+            reducer = state => _mutate(state).with(key,data=>{
+                if(!(data instanceof Object)) {
+                    throw Error(`key "${key}" is not object,please check your data structure`)
+                }
+                const newData = {...data}
+                newData[delete_key] = undefined
+                return newData    
+            }).done()
+        }
+        store.dispatch({ type: `${namespace}/std`, reducer })
+    }
+    function mutate(namespace,key,value){
+        const reducer = state => _mutate(state).with(key,value).done()
+        store.dispatch({ type: `${namespace}/std`, reducer })
+    }
     function run(namespace,sageEffect){ 
         invariant(typeof(namespace) === 'string', `Model.run方法第一个参数应该传入namespace`)
         invariant(typeof(sageEffect) === 'function', `run方法应该传入一个generator`)

@@ -26,7 +26,7 @@ export default function(store,sagaMiddleware,config){
         let index
         let reducer
         if(key.slice(-1)===']'){ // the second situation
-            index = key.slice(key.lastIndexOf('['),key.lastIndexOf(']'))
+            index = key.slice(key.lastIndexOf('[')+1,key.lastIndexOf(']'))
             key = key.slice(0,key.lastIndexOf('['))
             reducer = state => _mutate(state).with(key,data=>{
                 if(!(data instanceof Array)) {

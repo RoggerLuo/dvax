@@ -27,6 +27,9 @@ export default function(store,sagaMiddleware,config){
         let reducer
         if(key.slice(-1)===']'){ // the second situation
             index = key.slice(key.lastIndexOf('[')+1,key.lastIndexOf(']'))
+            if(isNaN(index)) {
+                throw Error(`index in "${key}" is not a number, please check your key`)
+            }
             key = key.slice(0,key.lastIndexOf('['))
             reducer = state => _mutate(state).with(key,data=>{
                 if(!(data instanceof Array)) {

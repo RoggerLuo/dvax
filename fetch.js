@@ -81,7 +81,7 @@ function transformQuery(query) {
         if (query.hasOwnProperty(k)) {
             queryStr += k
             queryStr += '='
-            queryStr += query[k]
+            queryStr += query[k]||''
             queryStr += '&'
         }
     }

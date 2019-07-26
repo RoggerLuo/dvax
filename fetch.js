@@ -14,7 +14,7 @@ export default function(config) {
         options.method = options.method.toUpperCase()
         options.credentials = 'include'
         // config        
-        let { baseUrl, headers, requestBody } = config
+        let { baseUrl, headers, requestBody, requestQuery } = config
         if(!baseUrl) baseUrl = ''
         if(baseUrl[baseUrl.length-1] == '/') {
             url = baseUrl + url
@@ -22,6 +22,7 @@ export default function(config) {
             url = baseUrl + '/' + url            
         }
         // apply config to options
+
         if (options.method === 'POST' || options.method === 'PUT') {
             
             if(options.requestBody) {
@@ -40,7 +41,11 @@ export default function(config) {
         // support query
         const configQuery = config.query || {}
         const optionsQuery = options.query || {}
-        const finalQuery = { ...configQuery, ...optionsQuery }
+        let finalQuery = { ...configQuery, ...optionsQuery }
+        if(requestQuery){
+            finalQuery = requestQuery(finalQuery)
+        }
+
         if (JSON.stringify(finalQuery) !== "{}") {
             url = url + transformQuery(finalQuery) 
         }
